@@ -2,21 +2,21 @@ package is.ru.stringcalculator;
 
 public class Calculator {
 
-	public static int add(String text){
+	public static int add(String text) {
+		String[] numbers;
 		if(text.equals("")){
 			return 0;
 		}
 		if((text.charAt(0) == '/') && (text.charAt(1) == '/') && (text.charAt(3) == '\n')) {
 			char delim = text.charAt(2);
 			text = text.substring(4);
-			return sum(splitNumbers(text, delim));
+			numbers = splitNumbers(text, delim);
 		} 
-		else if(text.contains(",") || (text.contains("\n"))){
-			return sum(splitNumbers(text));
-		}
-		else
-			return 1;
+		else //(text.contains(",") || (text.contains("\n"))){
+			numbers = splitNumbers(text);
+		return sum(numbers);
 	}
+
 
 	private static int toInt(String number){
 		return Integer.parseInt(number);
@@ -30,12 +30,15 @@ public class Calculator {
 	    return numbers.split("[//"+delim+",\n]");
 	}
 
-    private static int sum(String[] numbers){
+    private static int sum(String[] numbers) {
  	    int total = 0;
         for(String number : numbers){
-		    total += toInt(number);
+        	if(toInt(number) <= 1000)
+		    	total += toInt(number);
 		}
 		return total;
     }
+
+    
 
 }
